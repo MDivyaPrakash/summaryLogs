@@ -5,9 +5,6 @@ aioitertools==0.7.1
 aiosignal==1.2.0
 alabaster==0.7.12
 altair==5.3.0
-anaconda-anon-usage==0.4.3
-anaconda-client==1.12.2
-anaconda-navigator==2.3.0
 annotated-types==0.6.0
 anyio==3.5.0
 appdirs==1.4.4
@@ -56,14 +53,6 @@ clyent==1.2.2
 colorama==0.4.6
 colorcet==3.0.1
 comm==0.1.2
-conda==4.14.0
-conda-build==3.21.8
-conda-content-trust==0.2.0
-conda-package-handling==2.2.0
-conda_package_streaming==0.9.0
-conda-repo-cli==1.0.75
-conda-token==0.4.0
-conda-verify==3.4.2
 confection==0.1.4
 constantly==23.10.4
 contexttimer==0.3.3
@@ -301,7 +290,6 @@ rich==13.3.5
 rope==1.7.0
 rpds-py==0.10.6
 Rtree==1.0.1
-ruamel-yaml-conda==0.15.100
 ruff==0.3.4
 s3fs==2023.10.0
 safetensors==0.4.0

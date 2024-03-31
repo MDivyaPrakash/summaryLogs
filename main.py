@@ -9,6 +9,6 @@ app = FastAPI()
 
 @app.get('/')
 async def root():
-    return 'My Gradio app is running at /gradio', 200
+    return 'My Gradio app is running at /ui', 200
 
-app = gr.mount_gradio_app(app, demo, path='/gradio')
+app = gr.mount_gradio_app(app, demo, path='/ui')

@@ -17,7 +17,7 @@ async def root():
     return 'Reached the post endpoint', 200
 
 ## End point to handle the retrieval tasks
-@app.post('/get_question_and_facts')
+@app.get('/get_question_and_facts')
 async def root():
     return 'Reached the get Qns endpoint', 200
 

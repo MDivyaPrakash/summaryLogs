@@ -49,7 +49,6 @@ click-plugins==1.1.1
 cligj==0.7.2
 cloudpathlib==0.16.0
 cloudpickle==2.2.1
-clyent==1.2.2
 colorama==0.4.6
 colorcet==3.0.1
 comm==0.1.2
@@ -215,6 +214,7 @@ pexpect==4.8.0
 pickleshare==0.7.5
 pillow==10.2.0
 pip==23.3.1
+pip-date==1.0.5
 pkginfo==1.9.6
 platformdirs==3.10.0
 plotly==5.9.0
@@ -290,6 +290,7 @@ rich==13.3.5
 rope==1.7.0
 rpds-py==0.10.6
 Rtree==1.0.1
+ruamel-yaml-conda==0.15.100
 ruff==0.3.4
 s3fs==2023.10.0
 safetensors==0.4.0

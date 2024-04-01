@@ -2,6 +2,7 @@
 
 from fastapi import FastAPI
 import gradio as gr
+from llm import *
 
 from webapp import demo
 

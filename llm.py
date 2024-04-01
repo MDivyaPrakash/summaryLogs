@@ -1,61 +1,82 @@
 ## This file contains the LLMS functionalities required
-
-import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer
 import requests
+from credentials import *
+from datetime import datetime
+import json
 
-INSTRUCTION = """You're a professional meeting summariser bot. Given a sample call log, your task is
-to answer questions based on the summary of the call log. Read the call log below and answer the
-question. The output should be a bulleted list."""
+class summaryWriter():
+    def __init__(self):
+        self.datalogs = {}
+        self.dateResponse = {}
+        self.question = ''
+        
+    def getResponseWrapper(self,urls,question,ui_nd=False, date=None):
+        if self.question == '':
+            self.question = question
+        print(self.question)
 
-EXAMPLE_CALL_LOG = """Alex: Let's choose our app's color scheme today.
-Jordan: I suggest blue for a calm feel.
-Casey: We need to make sure it's accessible to all users."""
+        if not urls and not question and ui_nd and date:
+             return self.serve_UI_1(date)
 
-EXAMPLE_QUESTION = """What product design decisions did the team make?"""
+        url_list = sorted(urls.split(','))
+        CALL_LOGS = []
+        print(url_list)
+        for urlVal in url_list:
+            print(urlVal)
+            CALL_LOG_DATE = urlVal.split("/")[-1].split("_")[2]
+            CALL_LOG = requests.get(urlVal).text
+            CALL_LOG = "\n".join([item.strip() for item in CALL_LOG.split("\n") if len(item.strip()) and not item.strip()[0].isdigit()])
+            CALL_LOGS.append((CALL_LOG_DATE, CALL_LOG))
 
-EXAMPLE_ANSWER = """- The team will use blue for the color scheme of the app
-- The team will make the app accessible to all users"""
+        response = self.getResponse(self.question, CALL_LOGS)
+        if ui_nd:
+            return self.serve_UI_2(response)
+        else:
+            return self.serveAPI(response)
 
-def get_response(urlVal,question):
-
-    CALL_LOGS = []
-    CALL_LOG_DATE = urlVal.split("/")[-1].split("_")[2]
-    CALL_LOG = requests.get(urlVal)
-    CALL_LOG = "\n".join([item.strip() for item in CALL_LOG.split("\n") if len(item.strip()) and not item.strip()[0].isdigit()])
-    CALL_LOGS.append((CALL_LOG_DATE, CALL_LOG))
-
-    m = CustomLLM()
-    return m.getResponse(question, CALL_LOGS),CALL_LOG_DATE
-
-
-class CustomLLM:
-    def __init__(self, model_id="mistralai/Mistral-7B-Instruct-v0.2"):
-        self.model_id = model_id
-        self.tokenizer = AutoTokenizer.from_pretrained(model_id)
-        self.model = AutoModelForCausalLM.from_pretrained(model_id, torch_dtype=torch.float16, device_map="cuda")
-        self.running_job_flag = False
-
-    def __getStartMessage(self):
-        USER_EXAMPLE_MESSAGE = "\n".join([INSTRUCTION, EXAMPLE_CALL_LOG, EXAMPLE_QUESTION])
-        messages = [
-            {"role": "user", "content": USER_EXAMPLE_MESSAGE},
-            {"role": "assistant", "content": EXAMPLE_ANSWER}
-        ]
-        return messages
 
     def getResponse(self, question, call_logs):
-        responses = []
-        previous_call_log = ""
+        summary = ''
+        current_message = ''
+
         for call_log in call_logs:
-            messages = self.__getStartMessage()
             call_log_date, call_log_transcript = call_log
-            USER_MESSAGE = INSTRUCTION + "\n" + previous_call_log + call_log_transcript + "\n" + question
-            messages.append({"role": "user", "content": USER_MESSAGE})
-            inputs = self.tokenizer.apply_chat_template(messages, return_tensors="pt").to("cuda")
-            outputs = self.model.generate(inputs, max_new_tokens=100)
-            output_text = self.tokenizer.decode(outputs[0], skip_special_tokens=True).split("[/INST]")[-1].strip()
-            responses.append((call_log_date, output_text))
-            print(output_text)
-            previous_call_log += call_log_transcript + "\n"
-        return responses
+            print(call_log_date)
+            current_message += f"[INST] {call_log_date} {call_log_transcript} {question} [/INST]"
+        input = PROMPT + current_message
+        output = self.query(input)
+        summary= output[-1]['generated_text'].split("[/INST]")[-1]
+        return summary
+    
+    def query(self, payload):
+        json= {"inputs": payload, "parameters": {"max_new_tokens":256, "top_p":0.9, "temperature":0.7}}
+        response = requests.post(API_URL, headers=HEADERS, json=json)
+        return response.json()
+    
+    def serve_UI_1(self,date):
+        responseList = []
+        if date not in self.dateResponse.keys() :
+            return self.question, "The given date is not in range"
+        for key,val in self.dateResponse.items():
+            if key == date:
+                strVal = f"The facts at the end of the day {key} are below:" 
+                responseList.append(strVal)
+                responseList.append("\n".join(val))
+        return self.question, "\n \n".join(responseList)
+    
+    def serve_UI_2(self,response):
+        if not response:
+            return
+        newResponse = response.split('```')[1].split('json')
+        self.dateResponse = json.loads(newResponse[1])
+        responseList = []
+        for key,val in self.dateResponse.items():
+                strVal = f"The facts at the end of the day {key} are below:" 
+                responseList.append(strVal)
+                responseList.append("\n".join(val))
+        return "\n \n".join(responseList)
+    
+    def serveAPI(self,response):
+        newResponse = response.split('```')[1].split('json')
+        jsonResponse = json.loads(newResponse[1])
+        return jsonResponse

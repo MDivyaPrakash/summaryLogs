@@ -5,15 +5,15 @@ from datetime import datetime, timedelta
 from llm import *
 obj = summaryWriter()
 
-def qa_display_screen(date):
-    question ,output = obj.getResponseWrapper(None,None,ui_nd=True,date=date)
-    return question, output
-
 def document_addition_screen(question,urls):
-    output = obj.getResponseWrapper(urls,question,ui_nd=True,date=None)
+    output = obj.get_response_wrapper(urls,question,ui_nd=True,date=None)
     return output
 
-## Interfaces 
+def qa_display_screen(date):
+    question ,output = obj.get_response_wrapper(None,None,ui_nd=True,date=date)
+    return question, output
+
+## Interface
 qa_screen = gr.Interface(
     fn=qa_display_screen,
     inputs=[gr.Textbox(label="Date (YYYY-MM-DD)")],

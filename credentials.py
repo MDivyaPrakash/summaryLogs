@@ -1,16 +1,17 @@
 API_URL = "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2"
 HEADERS = {"Authorization": "Bearer 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"}
 
-INSTRUCTION = """As a professional meeting summarizer, your objective is to answer question based on the summary of a provided call log. 
-The call log for a given day will consists of multiple conversations of team members. Your job is to summarise the logs, day by day, understand the context and answer the question. Make
-If you find logs for multiple dates, you should you should check whether the answers to the same question has changed from the previous date.
-    If the answer to the question has changed then you should include that new point. If not changed, just include the previous point.
-The output should be in JSON Format. No need of any additional notes"""
+INSTRUCTION = """You are professional meeting summarizer and your objective is to answer a question based on the summary of the call log.
+The call log for a given day will consists of multiple conversations of team members. Your job is to summarise the call logs, then understand the context and answer the question. The answers should be in a detailed sentences, presented as bulleted points.
+Analyse the only call log and return the answer for the only the dates, in inputs. Keep a track of decisions, if changed make sure the answer is updated. No additional results required. Generate the output as JSON object. """
 
-EXAMPLE_CALL_LOG = """ For a sample log like this "'20240314' Alex: Let's choose our app's color scheme today. Jordan: I suggest blue for a calm feel. Casey: We need to make sure it's accessible to all users." '20240315' Alex: Let's change our app's color scheme today. Jordan: I suggest orange for a calm feel. Casey: We need to make sure it's accessible to all users. Lets wait on the color scheme, as it may take time" """
+EXAMPLE_CALL_LOG = """ For a sample log like this "'YYYYMMDD' Alex: Let's choose our app's color scheme today. Jordan: I suggest blue for a calm feel. Casey: We need to make sure it's accessible to all users." '20990315' Alex: Let's change our app's color scheme today. Jordan: I suggest orange for a calm feel. Casey: We need to make sure it's accessible to all users. Lets wait on the color scheme, as it may take time" """
 
-EXAMPLE_QUESTION = """ And for a question, like this " What product design decisions did the team make?" """
+EXAMPLE_QUESTION = """ For a sample question, like this " What product design decisions did the team make?" """
 
-EXAMPLE_ANSWER = """ The example answer in json format would be "'{'2024-03-14': ['The team has decided to use blue for the color scheme of the app', 'The team has decided go with accessible design'] , '2024-03-15': ['The team has decided to use blue for the color scheme of the app', 'The team will go with accessible design']}. Use this only as a reference. """
+EXAMPLE_ANSWER = """ The output JSON object should be formatted as "{"YYYY-MM-DD": ["Detailed answer to the question", "Detailed answer to the question"] , "YYYY-MM-DD": ["Detailed answer to the question", "Detailed answer to the question"]}" """
 
-PROMPT = '[INST]' + INSTRUCTION + '[/INST]' + EXAMPLE_CALL_LOG + EXAMPLE_QUESTION + EXAMPLE_ANSWER
+PROMPT = '[INST]' + INSTRUCTION  + EXAMPLE_ANSWER  + '[/INST]' #EXAMPLE_CALL_LOG + EXAMPLE_QUESTION + EXAMPLE_ANSWER +
+
+# If any logs for previous dates are present, you should check whether the current answers to the same question has changed from the previous date. 
+# If the answer to the question has changed then you should include that new point. If not changed, just include the previous point.

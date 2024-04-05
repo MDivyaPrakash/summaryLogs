@@ -25,7 +25,7 @@ The UI is built using Gradio. Gradio is an open-source Python library that enabl
 ### Model (Mistral)
 From Model Perspective, I chose to use the Hugging Face's Mistral_7B_Instruct_v0.2 [link](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.2) for getting the summaries of logs. The request with proper prompt is sent and the output is processed accroddingly
 
-### Data Storage --> SQLite
+### Data Retrieval and Storage (SQLite)
 The class summaryWriter, is responsible for receiving the urls and questions and interact with the LLM and finally store the values in a Database. The class contains multiple utilitarian modularised functions to enhance the functionality of the app. SQLite is chosen because of its light weighted nature, and incorporating a database could eventually help in scaling up.
 
 ### Tools and Technologies:

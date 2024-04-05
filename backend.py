@@ -6,7 +6,7 @@ import requests
 from credentials import *
 from datetime import datetime
 import json
-from dbops import *
+from db_Ops import *
 
 db_obj = DatabaseClass()
 

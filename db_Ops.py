@@ -4,7 +4,7 @@
 from sqlite_utils import Database
 import sqlite3
 from datetime import datetime
-db = Database(sqlite3.connect("my_database.db",check_same_thread=False))
+db = Database(sqlite3.connect("summariser.db",check_same_thread=False))
 
 class DatabaseClass():
     def __init__(self) -> None:
@@ -28,5 +28,3 @@ class DatabaseClass():
 
     def get_allvalues(self):
         return self.db["facts"].rows
-    
-

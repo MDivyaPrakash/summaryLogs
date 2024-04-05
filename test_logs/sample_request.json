@@ -1,0 +1,5 @@
+{
+    "question": "What are the decisions made on the user interfaces?",
+    "documents": ["https://raw.githubusercontent.com/MDivyaPrakash/summaryLogs/main/test_logs/call_log_20240314_104111.txt","https://raw.githubusercontent.com/MDivyaPrakash/summaryLogs/main/test_logs/call_log_20240315_104111.txt"],
+    "autoApprove": true
+  }

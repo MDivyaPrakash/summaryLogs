@@ -1,0 +1,17 @@
+{
+    "question": "What are the decisions made on the user interfaces?",
+    "factsByDay": {
+        "2024-03-14": [
+            "Modular design chosen for the product.",
+            "Responsive design recommended.",
+            "Dark theme suggested for the UI.",
+            "Websockets proposed but not yet decided."
+        ],
+        "2024-03-15": [
+            "Modular design chosen for the product.",
+            "Responsive design recommended.",
+            "Dark theme and light theme options suggested for the UI."
+        ]
+    },
+    "status": "done"
+}

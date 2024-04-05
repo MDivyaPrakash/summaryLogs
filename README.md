@@ -39,8 +39,11 @@ Development strategy was mainly using Test Driven Development, where use cases w
 
 Testing was done on test logs in the test_logs. With multiple questions, and to check whether the app handles all errors effectively.
 
+### Note
+Please ensure the URLS end with the format "call_log_20240314_104111.txt", where the last characters denotes the timestamp of the call log.
+
 ## Limitations and Challenges:
-Eventhough Mistral is the best in its LLM category, it is prone to hallucinate , even after a tuning the prompt very finely.This can lead to errors, while processing the outputs. 
+Even though Mistral is the best in its LLM category, it is prone to hallucinate , even after a tuning the prompt very finely.This can lead to errors, while processing the outputs. 
 
 One other limitation is the payload. In this solution we use the inference APIs to access model, which gives us less control over the size of the message sent.
 

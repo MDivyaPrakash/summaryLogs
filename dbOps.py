@@ -1,6 +1,10 @@
 # This file takes care of creating a table, updating and retrieving records for the transactions
-# FACTS TABLE structure = { {"date": str, "message": str, "suggest_nd": str, "approve_nd": bool, "update_dt": str}} 
-# Primary Composite key is a combination of "date" and "message" fields.
+# FACTS TABLE structure = {{"date": str, "message": str, "suggest_nd": str, "approve_nd": bool, "update_dt": str}} 
+# Primary Composite key is a combination of "date" and "message" fields, which is a fact.
+# The Column approve_nd is updated to True if the fact is approved or False.
+# The suggest_nd is the indicator which specifies whether the fact was added or removed or changed.
+# The update_dt stored the time stamp at which the row is updated.
+# Only the facts which are approved are shown to the users and have updated in last 24 hours are shown.
 
 from sqlite_utils import Database
 import sqlite3

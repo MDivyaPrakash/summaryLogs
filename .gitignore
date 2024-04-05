@@ -2,3 +2,5 @@ venv/
 __pycache__/
 test_logs/
 flagged/
+db_practise/
+*.db

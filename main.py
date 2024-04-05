@@ -7,12 +7,11 @@ from typing import List, Dict
 from datetime import date
 
 import gradio as gr
-from llm import *
+from backend import *
 from webapp import demo
 
 app = FastAPI()
-app.mainResponse = {}
-app.mainQuestion = ''
+obj = summaryWriter()
 
 @app.get('/')
 async def root():
@@ -33,25 +32,27 @@ class summaryResponse(BaseModel):
 @app.post('/submit_question_and_documents')
 def submit_docs(payload: questionDocPayload):
 
-    obj = summaryWriter()
     question = payload.question
     urls = payload.documents
-    responseAPI = obj.get_response_wrapper(urls,question,ui_nd=True,api_nd=True)
-    app.mainQuestion = question
-    app.mainResponse = responseAPI
-    if responseAPI:
+    try:
+        _ = obj.get_response_wrapper(urls,question)
         return Response(content="Question and documents submitted successfully", status_code=200)
-    else:
-        raise HTTPException(status_code=404, detail="File not processed as desired")
-
+    except:
+        raise HTTPException(status_code=400, detail="No Data to be displayed")
+    
 ## End point to handle the retrieval tasks
 @app.get('/get_question_and_facts')
 def get_docs():
-    if app.mainResponse:
-        dayLogDict = app.mainResponse
-        return summaryResponse(question= app.mainQuestion, factsByDay=dayLogDict, status="done")
+    dayLogDict = obj.get_api_dict()
+    question = obj.question
+    if dayLogDict:
+        return summaryResponse(question= question, factsByDay=dayLogDict, status="done")
     else:
-        return {"question": app.mainQuestion, "status": "processing"}
+        if obj.question:
+            return {"question": obj.question, "status": "processing"}
+        else:
+             raise HTTPException(status_code=404, detail="No Data to be displayed")
+
 
 
 ## The WEB UI Implementation using gradio

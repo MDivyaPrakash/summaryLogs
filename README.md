@@ -1,4 +1,4 @@
-# Logs Summary Writer APP - The Summariser
+# The Summariser
 
 ## Summary:
 This Summariser web-APP is designed to summarise the call logs and answer questions based on the questions asked by the user, along with a time navigation functionality.

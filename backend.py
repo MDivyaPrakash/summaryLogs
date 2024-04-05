@@ -64,14 +64,16 @@ class summaryWriter():
     def get_response(self, question, call_logs):
         summary = ''
         current_message = ''
-
+        print(call_logs)
         for call_log in call_logs:
             call_log_date, call_log_transcript = call_log
             print(call_log_date)
             current_message += f"[INST] {call_log_date} {call_log_transcript} [/INST]" 
         question = f"[INST]{question}[/INST]" 
         input = PROMPT + current_message + question
+        print(input)
         output = self.query(input)
+        print(output)
         summary= output[-1]['generated_text'].split("[/INST]")[-1]
         return summary
     

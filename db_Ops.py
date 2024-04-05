@@ -1,5 +1,6 @@
-# CREATE FACTS TABLE (date: date, message : facts, suggestion: (add,delete,remove))
 # This file takes care of creating a table, updating and retrieving records for the transactions
+# FACTS TABLE structure = { {"date": str, "message": str, "suggest_nd": str, "approve_nd": bool, "update_dt": str}} 
+# Primary Composite key is a combination of "date" and "message" fields.
 
 from sqlite_utils import Database
 import sqlite3

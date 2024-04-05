@@ -1,10 +1,11 @@
+## This file has the user interace implementation. 
+
 import requests
 import gradio as gr
 from glob import glob
 from datetime import datetime, timedelta
 from backend import *
 obj = summaryWriter()
-
 
 def update_values_function(*argv):
     newOutput = obj.db_wrapper_function(None,"GETALL")

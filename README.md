@@ -23,7 +23,7 @@ The main app is built using FastAPI framework, which supports both UI and the AP
 The UI is built using Gradio. Gradio is an open-source Python library that enables to quickly create UIs for your machine learning models. This was again chosen because of its high compatability with the FastAPI components.
 
 ### Model (Mistral)
-From Model Perspective, I chose to use the Hugging Face's Mistral_7B_Instruct_v0.2 [link](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.2) for getting the summaries of logs, leveraging its zero shot capabilities.
+From Model Perspective, Hugging Face's-Mistral_7B_Instruct_v0.2 [link](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.2), was chosen for getting the summaries of logs, leveraging its zero shot capabilities.
 
 The request with proper prompt is sent and the output is processed accroddingly. For this Hugging Face Inference API has been used, to minimise the cost of deployment. Given the ZeroShot capabilities of Mistral, it was able to give correct answers, in most of the test cases.
 
@@ -41,10 +41,10 @@ Development strategy was mainly using **Test Driven Development**, where use cas
 
 Testing was done on test logs in the /test_logs directory. With multiple questions, and to check whether the app handles all errors effectively.
 
- **NOTE**: During testing it was oberved that, for certain random test cases, the LLMs provides on output in a different format. Even though the system is designed to handle all possible errors, and has the prompt engineered, there could be some error, due to the fact that Mistral can hallucinate. To mitigate one can self host the model and fine tune it, with use cases. We can also make it more efficient by implementing a RAG framework as mentioned in [MISTRAL_AI](https://docs.mistral.ai/)
+**Note**: During testing it was oberved that, for certain random test cases, the LLMs provides on output in a different format. Even though the system is designed to handle all possible errors, and has the prompt engineered, there could be some error, due to the fact that Mistral can hallucinate. To mitigate one can self host the model and fine tune it, with use cases. We can also make it more efficient by implementing a RAG framework as mentioned in [MISTRAL_AI](https://docs.mistral.ai/)
 
-### Note
-Please ensure the URLS end with the format "call_log_20240314_104111.txt", where the last characters denotes the timestamp of the call log.
+
+Also, Please ensure the URLS end with the format "call_log_20240314_104111.txt", where the last characters denotes the timestamp of the call log.
 
 ## Limitations and Challenges:
 As this project aims to delivery accuracy in **minimal cost** of deployment, Hugging Face's inference API is being used.
@@ -53,4 +53,4 @@ Even though Mistral is the best in its LLM category, it is prone to hallucinate,
 
 One other limitation is the payload. In this solution we use the inference APIs to access model, which gives us less control over the size of the message sent.
 
-To mitigate the above two problems, one can implement a self hosted LLM and finetune it according to the use case. However,the solution comes with a cost. To improve the accuracy one can also implement a RAG framework to deliver optimal results.
+To mitigate the above two problems, one can implement a self hosted LLM and finetune it according to the use case. However,the solution comes with a **cost**. To improve the accuracy one can also implement a RAG framework to deliver optimal results.

@@ -37,7 +37,7 @@ All scripts are in python language and its supported libraries have been used.
 ![](others/demo.gif)
 
 ## Testing 
-Development strategy was mainly using **Test Driven Development**, where use cases where predefine earlier.
+Development strategy was mainly using **Test Driven Development**, where use cases where multiple usecases were predefine earlier.
 
 Testing was done on test logs in the /test_logs directory. With multiple questions, and to check whether the app handles all errors effectively.
 
@@ -54,3 +54,7 @@ Even though Mistral is the best in its LLM category, it is prone to hallucinate,
 One other limitation is the payload. In this solution we use the inference APIs to access model, which gives us less control over the size of the message sent.
 
 To mitigate the above two problems, one can implement a self hosted LLM and finetune it according to the use case. However,the solution comes with a **cost**. To improve the accuracy one can also implement a RAG framework to deliver optimal results.
+
+## Risks:
+
+One possible risk of the solution implemented is **prompt injection**, where in unwanted prompts are injected to the input prompt, resulting in a abnormal behavior of the model. Again this can be mitigated using fully secure self hosted service.
